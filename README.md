@@ -39,6 +39,7 @@ If you’re using this demo, please **★Star** this repository to show your int
    git clone https://github.com/GoogleCloudPlatform/microservices-demo
    cd microservices-demo/
    ```
+#No need of GCP
 
 3. Set the Google Cloud project and region and ensure the Google Kubernetes Engine API is enabled.
 
