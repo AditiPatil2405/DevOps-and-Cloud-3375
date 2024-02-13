@@ -2,12 +2,13 @@
 <img src="/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
 </p>
 
-![Original Repo](https://github.com/GoogleCloudPlatform/microservices-demo.git)
+[Original Repo](https://img.shields.io/badge/:badgeContent)(https://github.com/GoogleCloudPlatform/microservices-demo.git)
 
 **Online Boutique** is a cloud-first microservices demo application.  The application is a
 web-based e-commerce app where users can browse items,
 add them to the cart, and purchase them.
 
+The link to the original repostory is given above. Current repository is a clone of the original repository where a team of students at Lambton College, Toronto are using to develop their own pipeline and cluster to deploy the **Online Boutique** application.
 
 ## Screenshots
 
