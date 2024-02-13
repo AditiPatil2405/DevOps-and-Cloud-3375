@@ -2,7 +2,7 @@
 <img src="/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
 </p>
 
-[Original Repo](https://img.shields.io/badge/:badgeContent)(https://github.com/GoogleCloudPlatform/microservices-demo.git)
+[Original Repo](https://github.com/GoogleCloudPlatform/microservices-demo.git)
 
 **Online Boutique** is a cloud-first microservices demo application.  The application is a
 web-based e-commerce app where users can browse items,
