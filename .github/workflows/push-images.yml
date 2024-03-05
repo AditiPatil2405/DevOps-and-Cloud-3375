@@ -22,4 +22,4 @@ jobs:
 
       - name: Run the script to push images
         run: |
-          bash DevOps-and-Cloud-3375/src
+          bash src
