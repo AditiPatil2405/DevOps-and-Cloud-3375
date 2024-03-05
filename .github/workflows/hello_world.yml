@@ -20,8 +20,31 @@ jobs:
           username: neha
           key: |
             -----BEGIN RSA PRIVATE KEY-----
-                    0849279d20d14b781
-            (Your private key here)
+            MIIEpAIBAAKCAQEAiZWYdxen3S7E6K6v2bJQtsYQin+7/4pSlBwbT/gCHvGln/dr
+            OmUAX2BusrVkHwJ7hEP7e3zDRzrv5FMtGaRSzYlXJLgP1g2Fu5YcCG/aO7Do3Vgy
+            CiVThl5J3GL/GWGmAHdJ+0T8ONFqzJP/RfzlqfXekcloXCSKx8Qko5m3NaU4IxuR
+            MbEBfES4rZEVJFXc+tSahBDhJltxXAFrn2vpP4Z0ERx/QLE1M4ehtdUTni8q7dPS
+            O3FceoGBCHHBlAIeEuo2/f2OZrVTn14LVwCA3PDB8Gcavf8FvJcy2P5FG8RrZCXI
+            VqsaN6sp15rhGet9HKRDstt/212dOsjOe/kQYwIDAQABAoIBAQCEWtsPRjyANOvM
+            g7A7lqS7D5L+CZ+LVz/Vp6xGo+k2Z3TTjKskw+E134jedk1Y34R/Wv7kbsNVFMeO
+            OM3cKw5VF9gzRLZHTz7llKRnIWMppSh/Nsb8p6fQTYh0cO/DNQMC077h8B1Lc3pw
+            T7d1VrKBbDuut7ijW6v+PRyaHdf3zAabZCxh5rleJvj+YGqaJWCP7+Td3w1tuUiK
+            9zx/spm/4zCM/D4t3U1/kRWkiTEtWmAngBF5gs5zD3/COHPnBC/MIv2Z2FSjWSzq
+            KjHIHvyOn7i15jKiElt9f2QZrjXMGwiAHSFdd5I8I3T9F+SVTkT32WET9k0htb+S
+            45b8qbxhAoGBAOZs0NIRLmRXZYQFYTQJI+MN/PKa6Hpd+IVlrhOGFm20gb1QyshE
+            Lhd7EBh+Aa1utpaSnh8LKVuLuFnaE02ZzzVSM+pJMs0L74H0AROoilWkmwlETTer
+            SdAe1WvgbQVXTLu9k63LPIwo9n8lpyJxwNoI19jSjkMrUUPfjBrYcaVrAoGBAJja
+            2YxSRYOVYS2zK0l1oaE4v4AovvoQJCMDihcgcYjy7Gn1NVnxaazoUFbBYHaJ/Xdh
+            gK+RfTiYUjNdJTcg4QuwMNCfCTZdMY1Gy66bYdKlMkq7ISc3O3oDKTVno0WWxmzo
+            PTM/GSe1f0hSkyulC2snwCJ6yoIMsI0y2KzZOwbpAoGBALS1oCsu6EgvNmEMawgJ
+            JwjZnoeRL0NQUSgk7xlGrm5JAvq60t2ugstNavkaUSx3yGBcCf/knAG8mM52tW7F
+            cnipyCc0Us/2TVaISxPkuOCjoCbrVveSsOe0VsIslrN6nKYb7iZ9XjW5pl9e4y2j
+            MpCMIONddc59uVTWi6U+HBqTAoGAEmjBLLI35woVoyBiBT3ikn04KyI9JfbNs13Y
+            wsJIijrfmD9NBqEZnhZ4noo5qO0jlr4qdnqqPyexNrhwI/yUvgihSG7u+BovPpmZ
+            LFVQacM1lGSHMKbpRd+dle3+bwIisbkircpaqDqmsronOWluP6CQ9lYdj54hoU/P
+            Yrni7wkCgYB+hQso8NMyqumVNf0fO55vjZ6QJQtRxgbqZOV4GwB5uxma5WNu0H7j
+            3xGZCW/SfrL7XAU4LtYQniW9cPs1r952jO/fmZBZei3sR5qLYNDTmj+YpeyXQv48
+            2aDDSs9Xthl3CRWri0jfNJ9Ry0o6935NXoLbBSTrXp84QzKaL3oDcw==
             -----END RSA PRIVATE KEY-----
           port: 22
           script: |
