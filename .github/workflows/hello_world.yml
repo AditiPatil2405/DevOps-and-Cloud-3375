@@ -17,7 +17,6 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ec2-99-79-67-77.ca-central-1.compute.amazonaws.com
-          
           username: neha
           key: |
             -----BEGIN RSA PRIVATE KEY-----
@@ -31,24 +30,4 @@ jobs:
             06N+Uc5knasRWUOTfdAnhBVV0yl32lLBX7koavFFC5xfTP2Gs6mcwOEwPmliYMUi
             CaPQxtbgadwIKh9mLpgJC9lIB2LBjZEjJAU4gqj3oYE3HU4K37o28wZrHEf4/EDE
             c/RlgJAxDPK5aEJlTi3rAy/qsxZZdHPgSfma7nYroQq5D8lIcFJVA+bXxuv1KTSK
-            bx/4ypvowoWbh6KSAEgA0bBwAxh9k/lPS+YXJgA3TVCP62gt/ZOajThXsObbK9hC
-            Q9zDZoECgYEAySq9GA04t1jt02MPqFHgsSnsmhJoM+5FLebIhLRk65a1MgA6j0jH
-            zG9ghEOxAMWuDcVvArLfQX7Xs4DZR0r779C1FLDqZviLf5FTe5duwsoXj2s/AYMt
-            nae5CGqbwUyycXYtgKedJTz2D9Hp9nm0X4FcqoItikTDMGwVMVFfe5UCgYEAtlC6
-            njbHKx8W5lUJguH0RpXDPWMeFhvILi4XikWBjOjcNrT3AAePil7ruLVQ0+GPVF5O
-            FXKy3sGWuqLcaa5ntAd9AmGyRIWxo7InY5RtDJ2igEnmfC+sHRlz+IPBsyBBSGRm
-            7QGjIDgPmRX461bOGzxOan44qTjsX6IYSEov4IkCgYEAvSDYXPd5Pi92kUnOG7K2
-            6/l9f7EUlNZL5gbWuKUdSL0NJ7A9Xh7P8W05McCudgpkRIA9iS0AZwRI6XOXU8a0
-            rFftF0Hpbtv30vyfn0/VC3+SvPzYZKSey103wijwvMBN+AxiZVWwkaUJtf/l1hvA
-            MBZgN9Jh3GAfnrPPDOnzOi0CgYAiO9Ju9vY7IKFaKsmYa/lEb8azdjMmD51tHnaJ
-            HjgPT4JaO2zN8p1/bAdzLYi54HbbbsHWwSzZKxy0evRMW9VZNrbAhbvFph0PEdrX
-            lf1MCyWCVV4UH5d/91GRbpwmmH3prACvrEkHOb+kDT4qYqhc8NwAnybgj7HC21sX
-            5+ZJkQKBgCgFyOoJgtlLa0pTgn9UVzMb2LzVlkRTX0LJFXq0Dm5oAXXq2kILqB9Z
-            tSODI++3+JRbfCHZ10tK8w5VGE7yRfdPG/qaTd6HOcF4xusVgRduXsfK0WtIf6bv
-            F8yzusgHLlv3f4JITKjZ5XzBBMXawavevDIUy/5SigAYJxFBT4ln
-
-            -----END RSA PRIVATE KEY-----
-          port: 22
-          script: |
-            # Run your commands on the EC2 instance
-            echo "Hello from EC2!"
+            bx/4ypvowo
