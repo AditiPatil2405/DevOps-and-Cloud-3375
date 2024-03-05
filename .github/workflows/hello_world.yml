@@ -17,34 +17,24 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ec2-99-79-60-146.ca-central-1.compute.amazonaws.com
+          
           username: neha
           key: |
             -----BEGIN RSA PRIVATE KEY-----
-            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
+            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
             -----END RSA PRIVATE KEY-----
           port: 22
           script: |
