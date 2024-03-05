@@ -16,7 +16,7 @@ images=(
 )
 
 # AWS ECR repository URI
-ecr_repository="058264132523.dkr.ecr.ca-central-1.amazonaws.com/test"
+ecr_repository="058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique"
 
 # Authenticate Docker client to ECR
 aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin "$ecr_repository"
