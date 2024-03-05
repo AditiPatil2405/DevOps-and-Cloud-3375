@@ -16,25 +16,37 @@ jobs:
       - name: SSH into EC2
         uses: appleboy/ssh-action@master
         with:
-          host: ec2-99-79-60-146.ca-central-1.compute.amazonaws.com
+          host: ec2-99-79-67-77.ca-central-1.compute.amazonaws.com
           
           username: neha
           key: |
             -----BEGIN RSA PRIVATE KEY-----
-            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
+            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
+
             -----END RSA PRIVATE KEY-----
           port: 22
           script: |
