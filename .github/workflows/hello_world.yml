@@ -12,3 +12,15 @@ jobs:
 
       - name: Print Hello World
         run: echo "Hello, World!"
+
+      - name: SSH into EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            # Run your commands on the EC2 instance
+            # Example: echo "Hello from EC2!"
+            echo "Hello from EC2!"
