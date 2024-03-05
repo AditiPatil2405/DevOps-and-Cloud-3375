@@ -26,5 +26,4 @@ jobs:
           port: 22
           script: |
             # Run your commands on the EC2 instance
-            # Example: echo "Hello from EC2!"
             echo "Hello from EC2!"
