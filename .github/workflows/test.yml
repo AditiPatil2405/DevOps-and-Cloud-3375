@@ -1,0 +1,40 @@
+name: Run Tests on Main
+
+on:
+  push:
+    branches:
+      - feature_neha
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Find package.json
+        id: find_package
+        run: |
+          # Look for package.json file
+          if [ -f "package.json" ]; then
+            echo "::set-output name=path::."
+          else
+            echo "No package.json found"
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: |
+          cd ${{ steps.find_package.outputs.path }}
+          npm install
+
+      - name: Run tests
+        run: |
+          cd ${{ steps.find_package.outputs.path }}
+          npm test
