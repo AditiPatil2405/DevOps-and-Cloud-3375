@@ -16,10 +16,10 @@ jobs:
       - name: SSH into EC2
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+          host: ${{ 99.79.60.146 }}
+          username: ${{ neha }}
+          key: ${{ 0105e1f0b5b2c2429 }}
+          port: ${{ 22 }}
           script: |
             # Run your commands on the EC2 instance
             # Example: echo "Hello from EC2!"
