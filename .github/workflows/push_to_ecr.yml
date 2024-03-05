@@ -16,9 +16,16 @@ jobs:
       - name: Set up Docker
         uses: actions/setup-docker@v2
         
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ca-central-1 
+          
       - name: Log in to Amazon ECR
         id: login-ecr
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin https://us-east-1.console.aws.amazon.com/ecr/repositories/private/787914649228/3375?region=us-east-1
+        run: aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique
         
       - name: Run script to push images
         run: |
