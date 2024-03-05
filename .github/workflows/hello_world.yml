@@ -16,6 +16,9 @@ jobs:
       - name: SSH into EC2
         uses: appleboy/ssh-action@master
         with:
+          script: |
+              ssh -i C:/Program Files/Amazon/AWSCLIV2/ec2_pipeline.pem neha@ec2-99-79-67-77.ca-central-1.compute.amazonaws.com 'echo "Hello from EC2!"'
+
           host: ec2-99-79-67-77.ca-central-1.compute.amazonaws.com
           username: neha
           key: |
@@ -31,3 +34,4 @@ jobs:
             CaPQxtbgadwIKh9mLpgJC9lIB2LBjZEjJAU4gqj3oYE3HU4K37o28wZrHEf4/EDE
             c/RlgJAxDPK5aEJlTi3rAy/qsxZZdHPgSfma7nYroQq5D8lIcFJVA+bXxuv1KTSK
             bx/4ypvowo
+          
