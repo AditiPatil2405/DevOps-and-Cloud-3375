@@ -1,0 +1,43 @@
+name: Push Docker images to AWS ECR
+
+on:
+  push:
+    branches:
+      - main  # Or any other branch you want to trigger the workflow
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      with:
+        aws-access-key-id: ${{ secrets.YOUR_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.YOUR_AWS_SECRET_ACCESS_KEY }}
+        region: YOUR_AWS_REGION
+
+    - name: Pull, Tag, and Push Docker images to ECR
+      run: |
+        images=(
+          "gcr.io/google-samples/microservices-demo/emailservice:v0.9.0"
+          "gcr.io/google-samples/microservices-demo/checkoutservice:v0.9.0"
+          "gcr.io/google-samples/microservices-demo/recommendationservice:v0.9.0"
+          # Add the rest of your images here
+        )
+        ecr_repository="058264132523.dkr.ecr.YOUR_AWS_REGION.amazonaws.com/online-boutique"
+        for image in "${images[@]}"; do
+          echo "Pushing Docker image: $image"
+          docker pull "$image"
+          trimmed_image="${image//:/-}"
+          tagged_image="$ecr_repository:${trimmed_image#gcr.io/google-samples/microservices-demo/}"
+          docker tag "$image" "$tagged_image"
+          docker push "$tagged_image"
+        done
