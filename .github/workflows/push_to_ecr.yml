@@ -31,5 +31,5 @@ jobs:
         run: |
           ls
           pwd
-          chmod +x push_to_ecr.sh
-          ./push_to_ecr.sh 
+          chmod +x docker_pull_all.sh
+          ./docker_pull_all.sh 
