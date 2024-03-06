@@ -1,4 +1,4 @@
-name: Hello World
+name: Hello World with SSH
 
 on: [push]
 
@@ -13,14 +13,17 @@ jobs:
       - name: Print Hello World
         run: echo "Hello, World!"
 
+      - name: Debug SSH Private Key
+        run: echo "$SSH_PRIVATE_KEY" | sed 's/./&\n/g'
+
       - name: SSH into EC2
         uses: appleboy/ssh-action@master
         with:
-           host: ${{ secrets.EC2_HOST }}
-           username: ${{ secrets.EC2_USERNAME }}
-           key: ${{ secrets.SSH_PRIVATE_KEY }}
-           port: ${{ secrets.SSH_PORT }}
-           script: |
-            # Run your commands on the EC2 instance
-            # Example: echo "Hello from EC2!"
-            echo "Hello from EC2!"
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+           # Run your commands on the EC2 instance
+           # Example: echo "Hello from EC2!"
+           echo "Hello from EC2!"
