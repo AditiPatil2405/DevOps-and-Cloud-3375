@@ -22,10 +22,10 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.YOUR_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.YOUR_AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.YOUR_AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
-      run: aws ecr get-login-password --region ${{ secrets.YOUR_AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+      run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
 
     - name: Build and push Docker images
       run: |
