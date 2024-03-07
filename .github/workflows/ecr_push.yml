@@ -1,43 +1,69 @@
-name: Push Docker images to AWS ECR
+name: Build and Deploy to ECR and Kubernetes
 
 on:
   push:
     branches:
-      - main  # Or any other branch you want to trigger the workflow
+      - main  # Adjust this to the branches where you want this workflow to run
+
+env:
+  AWS_REGION: ca-central-1  # Adjust this to your AWS region
+  ECR_REGISTRY: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique  # Your ECR registry URI
+  KUBECONFIG_DATA: ${{ secrets.KUBECONFIG_DATA }}  # Your base64-encoded kubeconfig file
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.YOUR_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.YOUR_AWS_SECRET_ACCESS_KEY }}
-        region: YOUR_AWS_REGION
+        aws-region: ${{ secrets.YOUR_AWS_REGION }}
 
-    - name: Pull, Tag, and Push Docker images to ECR
+    - name: Login to Amazon ECR
+      run: aws ecr get-login-password --region ${{ secrets.YOUR_AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+
+    - name: Build and push Docker images
       run: |
-        images=(
-          "gcr.io/google-samples/microservices-demo/emailservice:v0.9.0"
-          "gcr.io/google-samples/microservices-demo/checkoutservice:v0.9.0"
-          "gcr.io/google-samples/microservices-demo/recommendationservice:v0.9.0"
-          # Add the rest of your images here
+        services=(
+          "emailservice"
+          "productcatalogservice"
+          "recommendationservice"
+          "shippingservice"
+          "checkoutservice"
+          "paymentservice"
+          "currencyservice"
+          "cartservice"
+          "frontend"
+          "adservice"
+          "loadgenerator"
         )
-        ecr_repository="058264132523.dkr.ecr.YOUR_AWS_REGION.amazonaws.com/online-boutique"
-        for image in "${images[@]}"; do
-          echo "Pushing Docker image: $image"
-          docker pull "$image"
-          trimmed_image="${image//:/-}"
-          tagged_image="$ecr_repository:${trimmed_image#gcr.io/google-samples/microservices-demo/}"
-          docker tag "$image" "$tagged_image"
-          docker push "$tagged_image"
+        for service in "${services[@]}"; do
+          context="src/$service"
+          # Special case for cartservice
+          if [ "$service" == "cartservice" ]; then
+            context="src/cartservice/src"
+          fi
+          docker build -t $service:latest $context
+          docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+          docker push ${{ env.ECR_REGISTRY }}:$service-latest 
         done
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up kubectl
+      run: |
+        echo "${{ secrets.KUBECONFIG_DATA }}" | base64 -d > kubeconfig.yml
+        echo "KUBECONFIG_FILE=${GITHUB_WORKSPACE}/kubeconfig.yml" >> $GITHUB_ENV
+
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f kubernetes-manifests/
