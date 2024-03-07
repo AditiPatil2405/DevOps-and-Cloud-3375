@@ -16,7 +16,7 @@
 #     spec:
 #       containers:
 #       - name: nginx
-#         image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:mynginx
+#         image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:mynginx
 #         ports:
 #         - containerPort: 80
 
@@ -50,7 +50,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:emailservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:emailservice-v0.9.0
         ports:
         - containerPort: 8080
         env:
@@ -115,7 +115,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:checkoutservice-v0.9.0
+          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:checkoutservice-v0.9.0
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -189,7 +189,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:recommendationservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:recommendationservice-v0.9.0
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -258,7 +258,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:frontend-v0.9.0
+          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:frontend-v0.9.0
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -371,7 +371,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:paymentservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:paymentservice-v0.9.0
         ports:
         - containerPort: 50051
         env:
@@ -435,7 +435,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:productcatalogservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:productcatalogservice-v0.9.0
         ports:
         - containerPort: 3550
         env:
@@ -499,7 +499,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:cartservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:cartservice-v0.9.0
         ports:
         - containerPort: 7070
         env:
@@ -591,7 +591,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:loadgenerator-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:loadgenerator-v0.9.0
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -634,7 +634,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:currencyservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:currencyservice-v0.9.0
         ports:
         - name: grpc
           containerPort: 7000
@@ -698,7 +698,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:shippingservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:shippingservice-v0.9.0
         ports:
         - containerPort: 50051
         env:
@@ -828,7 +828,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 875029285198.dkr.ecr.ca-central-1.amazonaws.com/test:adservice-v0.9.0
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:adservice-v0.9.0
         ports:
         - containerPort: 9555
         env:
