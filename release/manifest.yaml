@@ -1,24 +1,8 @@
 # !!!!!!!!!!!!!!!!!!!!!!!This yaml file is still under development. Do not run this file until noticed.
 
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: nginx-deployment
-# spec:
-#   selector:
-#     matchLabels:
-#       app: nginx
-#   replicas: 3
-#   template:
-#     metadata:
-#       labels:
-#         app: nginx
-#     spec:
-#       containers:
-#       - name: nginx
-#         image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:mynginx
-#         ports:
-#         - containerPort: 80
+# Define ECR repository URI prefix variable
+variables:
+  image_repository: "058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:"
 
 ---
 apiVersion: apps/v1
@@ -50,7 +34,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:emailservice-v0.9.0
+        image: ${{image_repository}}emailservice-latest
         ports:
         - containerPort: 8080
         env:
@@ -115,7 +99,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:checkoutservice-v0.9.0
+          image: ${{image_repository}}checkoutservice-latest
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -189,7 +173,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:recommendationservice-v0.9.0
+        image: ${{image_repository}}recommendationservice-latest
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -258,7 +242,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:frontend-v0.9.0
+          image: ${{image_repository}}frontend-latest
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -371,7 +355,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:paymentservice-v0.9.0
+        image: ${{image_repository}}paymentservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -435,7 +419,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:productcatalogservice-v0.9.0
+        image: ${{image_repository}}productcatalogservice-latest
         ports:
         - containerPort: 3550
         env:
@@ -499,7 +483,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:cartservice-v0.9.0
+        image: ${{image_repository}}cartservice-latest
         ports:
         - containerPort: 7070
         env:
@@ -591,7 +575,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:loadgenerator-v0.9.0
+        image: ${{image_repository}}loadgenerator-latest
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -634,7 +618,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:currencyservice-v0.9.0
+        image: ${{image_repository}}currencyservice-latest
         ports:
         - name: grpc
           containerPort: 7000
@@ -698,7 +682,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:shippingservice-v0.9.0
+        image: ${{image_repository}}shippingservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -828,7 +812,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:adservice-v0.9.0
+        image: ${{image_repository}}adservice-latest
         ports:
         - containerPort: 9555
         env:
