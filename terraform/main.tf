@@ -3,27 +3,17 @@ provider "aws" {
 }
 
 locals {
-  eks_cluster_name = "my-cluster"
+  eks_cluster_name = "my_cluster"
 }
 
-# Enable AWS Services
-module "enable_aws_apis" {
-  source  = "terraform-aws-modules/project-factory/aws//modules/project_services"
-  version = "2.0.0"
 
-  project_id                  = "001"
-  disable_services_on_destroy = false
-
-  # Add the AWS services you want to enable
-  activate_apis = ["eks.amazonaws.com", "cloudwatch.amazonaws.com"] # Add more as needed
-}
 
 # Create EKS Cluster
 module "eks_cluster" {
   source = "terraform-aws-modules/eks/aws"
 
   cluster_name    = local.eks_cluster_name
-  subnets         = ["subnet-xxxxxxxxxxxxxx", "subnet-yyyyyyyyyyyyyy", "subnet-zzzzzzzzzzzzzz"] # Update with your subnet IDs
+  subnets         = ["subnet-xxxxxxxxxxxxxx", "subnet-yyyyyyyyyyyyyy"]# Update with your subnet IDs
   vpc_id          = "vpc-08a5775fdb38b9a62" # Update with your VPC ID
   node_groups     = {
     eks_nodes = {
