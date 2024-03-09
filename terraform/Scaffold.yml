@@ -1,0 +1,74 @@
+apiVersion: skaffold/v3
+kind: Config
+metadata:
+  name: app
+build:
+  artifacts:
+  - image: emailservice
+    context: src/emailservice
+  - image: productcatalogservice
+    context: src/productcatalogservice
+  - image: recommendationservice
+    context: src/recommendationservice
+  - image: shippingservice
+    context: src/shippingservice
+  - image: checkoutservice
+    context: src/checkoutservice
+  - image: paymentservice
+    context: src/paymentservice
+  - image: currencyservice
+    context: src/currencyservice
+  - image: cartservice
+    context: src/cartservice/src
+    docker:
+      dockerfile: Dockerfile
+  - image: frontend
+    context: src/frontend
+  - image: adservice
+    context: src/adservice
+  tagPolicy:
+    gitCommit: {}
+  local:
+    useBuildkit: false
+manifests:
+  kustomize:
+    paths:
+    - kubernetes-manifests
+deploy:
+  kubectl: {}
+profiles:
+- name: aws
+  build:
+    artifacts:
+    - image: emailservice
+      context: src/emailservice
+    - image: productcatalogservice
+      context: src/productcatalogservice
+    - image: recommendationservice
+      context: src/recommendationservice
+    - image: shippingservice
+      context: src/shippingservice
+    - image: checkoutservice
+      context: src/checkoutservice
+    - image: paymentservice
+      context: src/paymentservice
+    - image: currencyservice
+      context: src/currencyservice
+    - image: cartservice
+      context: src/cartservice/src
+      docker:
+        dockerfile: Dockerfile
+    - image: frontend
+      context: src/frontend
+    - image: adservice
+      context: src/adservice
+  manifests:
+    kustomize:
+      paths:
+      - kubernetes-manifests
+  deploy:
+    kubectl: {}
+  profiles:
+  - name: aws
+    build:
+      googleCloudBuild: {}  # You can customize this section based on your AWS build setup
