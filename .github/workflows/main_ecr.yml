@@ -62,7 +62,7 @@ jobs:
       - name: Push Docker images to ECR
         run: echo "Images are already pushed in the 'build' job"
       
-       - name: Push Docker images to ECR
+      - name: Push Docker images to ECR
         run: echo "Images are already pushed in the 'build' job"
 
   test:
