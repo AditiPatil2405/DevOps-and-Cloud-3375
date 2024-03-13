@@ -39,18 +39,8 @@ jobs:
             fi
 
             docker build -t $service:latest $context
-            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+            docker tag $service:latest $ECR_REGISTRY/$service:latest
           done
-          
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Run test script
-        run: ./test.sh
 
   deploy:
     needs: build
@@ -61,10 +51,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: $AWS_REGION
 
       - name: Login to Amazon ECR
-        run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+        run: aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
 
       - name: Push Docker images to ECR
         run: |
@@ -82,5 +72,14 @@ jobs:
             "loadgenerator"
           )
           for service in "${services[@]}"; do
-            docker push ${{ env.ECR_REGISTRY }}:$service-latest
+            docker push $ECR_REGISTRY/$service:latest
           done
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run test script
+        run: ./test.sh
