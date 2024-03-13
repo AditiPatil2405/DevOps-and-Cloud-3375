@@ -38,7 +38,9 @@ jobs:
               context="src/cartservice/src"
             fi
 
-            docker build -t ${{ env.ECR_REGISTRY }}/$service:latest $context
+            docker build -t $service:latest $context
+            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+            #docker build -t ${{ env.ECR_REGISTRY }}/$service:latest $context
             #docker build -t $service:latest $context
             #docker tag $service:latest ${{ env.ECR_REGISTRY }}/$service:latest
           done
@@ -73,7 +75,7 @@ jobs:
             "loadgenerator"
           )
           for service in "${services[@]}"; do
-            docker push ${{ env.ECR_REGISTRY }}/$service:latest
+            docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
   test:
     needs: build
