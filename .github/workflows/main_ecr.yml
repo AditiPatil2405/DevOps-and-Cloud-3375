@@ -40,7 +40,7 @@ jobs:
 
             docker build -t $service:latest $context
           done
-          S
+          
   test:
     needs: build
     runs-on: ubuntu-latest
