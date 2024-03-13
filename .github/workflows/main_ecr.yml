@@ -1,4 +1,4 @@
-name: Ecr Deployment
+name: Build and Deploy to ECR and Kubernetes
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: BuildS Docker images
+      - name: Build Docker images
         run: |
           services=(
             "emailservice"
@@ -38,9 +38,9 @@ jobs:
               context="src/cartservice/src"
             fi
 
-            docker build -t $service:latest $context
-            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-            docker push ${{ env.ECR_REGISTRY }}:$service-latest
+            docker build -t ${{ env.ECR_REGISTRY }}/$service:latest $context
+            #docker build -t $service:latest $context
+            #docker tag $service:latest ${{ env.ECR_REGISTRY }}/$service:latest
           done
 
   deploy:
@@ -58,11 +58,23 @@ jobs:
         run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
 
       - name: Push Docker images to ECR
-        run: echo "Images are already pushed in the 'build' job"
-      
-      - name: Push Docker images to ECR
-        run: echo "Images are already pushed in the 'build' job"
-
+        run: |
+          services=(
+            "emailservice"
+            "productcatalogservice"
+            "recommendationservice"
+            "shippingservice"
+            "checkoutservice"
+            "paymentservice"
+            "currencyservice"
+            "cartservice"
+            "frontend"
+            "adservice"
+            "loadgenerator"
+          )
+          for service in "${services[@]}"; do
+            docker push ${{ env.ECR_REGISTRY }}/$service:latest
+          done
   test:
     needs: build
     runs-on: ubuntu-latest
