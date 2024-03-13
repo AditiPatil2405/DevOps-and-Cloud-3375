@@ -39,6 +39,7 @@ jobs:
             fi
 
             docker build -t $service:latest $context
+            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
           done
           
   test:
@@ -81,6 +82,5 @@ jobs:
             "loadgenerator"
           )
           for service in "${services[@]}"; do
-            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
             docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
