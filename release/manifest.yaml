@@ -1,9 +1,12 @@
 # !!!!!!!!!!!!!!!!!!!!!!!This yaml file is still under development. Do not run this file until noticed.
 
-# Define ECR repository URI prefix variable
-variables:
-  image_repository: "058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:"
-
+# Define ECR repository URI prefix as a ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecr-config
+data:
+  ECR_REPO: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,7 +37,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}emailservice-latest
+        image: $(ECR_REPO):emailservice-latest
         ports:
         - containerPort: 8080
         env:
@@ -99,7 +102,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: ${{image_repository}}checkoutservice-latest
+          image: $(ECR_REPO):checkoutservice-latest
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -173,7 +176,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}recommendationservice-latest
+        image: $(ECR_REPO):recommendationservice-latest
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -242,7 +245,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: ${{image_repository}}frontend-latest
+          image: $(ECR_REPO):frontend-latest
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -355,7 +358,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}paymentservice-latest
+        image: $(ECR_REPO):paymentservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -419,7 +422,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}productcatalogservice-latest
+        image: $(ECR_REPO):productcatalogservice-latest
         ports:
         - containerPort: 3550
         env:
@@ -483,7 +486,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}cartservice-latest
+        image: $(ECR_REPO):cartservice-latest
         ports:
         - containerPort: 7070
         env:
@@ -575,7 +578,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}loadgenerator-latest
+        image: $(ECR_REPO):loadgenerator-latest
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -618,7 +621,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}currencyservice-latest
+        image: $(ECR_REPO):currencyservice-latest
         ports:
         - name: grpc
           containerPort: 7000
@@ -682,7 +685,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}shippingservice-latest
+        image: $(ECR_REPO):shippingservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -812,7 +815,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: ${{image_repository}}adservice-latest
+        image: $(ECR_REPO):adservice-latest
         ports:
         - containerPort: 9555
         env:
