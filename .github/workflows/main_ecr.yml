@@ -40,9 +40,7 @@ jobs:
 
             docker build -t $service:latest $context
             docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-            #docker build -t ${{ env.ECR_REGISTRY }}/$service:latest $context
-            #docker build -t $service:latest $context
-            #docker tag $service:latest ${{ env.ECR_REGISTRY }}/$service:latest
+            docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
 
   deploy:
@@ -60,23 +58,8 @@ jobs:
         run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
 
       - name: Push Docker images to ECR
-        run: |
-          services=(
-            "emailservice"
-            "productcatalogservice"
-            "recommendationservice"
-            "shippingservice"
-            "checkoutservice"
-            "paymentservice"
-            "currencyservice"
-            "cartservice"
-            "frontend"
-            "adservice"
-            "loadgenerator"
-          )
-          for service in "${services[@]}"; do
-            docker push ${{ env.ECR_REGISTRY }}:$service-latest
-          done
+        run: echo "Images are already pushed in the 'build' job"
+        
   test:
     needs: build
     runs-on: ubuntu-latest
