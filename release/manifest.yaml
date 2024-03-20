@@ -1,12 +1,12 @@
 # !!!!!!!!!!!!!!!!!!!!!!!This yaml file is still under development. Do not run this file until noticed.
 
 # Define ECR repository URI prefix as a ConfigMap
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ecr-config
-data:
-  ECR_REPO: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: ecr-config
+# data:
+#   ECR_REPO: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,7 +37,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):emailservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:emailservice-latest
         ports:
         - containerPort: 8080
         env:
@@ -102,7 +102,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: $(ECR_REPO):checkoutservice-latest
+          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:checkoutservice-latest
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -176,7 +176,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):recommendationservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:recommendationservice-latest
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -245,7 +245,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: $(ECR_REPO):frontend-latest
+          image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:frontend-latest
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -358,7 +358,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):paymentservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:paymentservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -422,7 +422,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):productcatalogservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:productcatalogservice-latest
         ports:
         - containerPort: 3550
         env:
@@ -486,7 +486,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):cartservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:cartservice-latest
         ports:
         - containerPort: 7070
         env:
@@ -578,7 +578,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):loadgenerator-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:loadgenerator-latest
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -621,7 +621,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):currencyservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:currencyservice-latest
         ports:
         - name: grpc
           containerPort: 7000
@@ -685,7 +685,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):shippingservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:shippingservice-latest
         ports:
         - containerPort: 50051
         env:
@@ -815,7 +815,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: $(ECR_REPO):adservice-latest
+        image: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique:adservice-latest
         ports:
         - containerPort: 9555
         env:
