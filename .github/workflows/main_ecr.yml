@@ -62,15 +62,15 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./test.tf
+        working-directory: test.tf
 
       - name: Terraform Plan
         run: terraform plan
-        working-directory: ./test.tf
+        working-directory: test.tf
 
       - name: Terraform Apply
         run: terraform apply --auto-approve
-        working-directory: ./test.tf
+        working-directory: test.tf
         
   test:
     needs: build
@@ -79,4 +79,4 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Run test script
-        run: ./test.sh
+        run: test.sh
