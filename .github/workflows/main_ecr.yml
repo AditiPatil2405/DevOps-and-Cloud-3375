@@ -47,23 +47,18 @@ jobs:
             # Build the Docker image
             docker build -t $service:latest $context
             
-            # Check if the image exists locally
-            if docker inspect $service:latest &>/dev/null; then
-              # Retrieve existing digest from ECR, if it exists
-              existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || true)
+            # Retrieve existing digest from ECR, if it exists
+            existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || true)
 
-              # Get new digest
-              new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest)
-
-              # Compare digests and push if they are different or if the image doesn't exist in the repository
-              if [ "$new_digest" != "$existing_digest" ]; then
-                docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-                docker push ${{ env.ECR_REGISTRY }}:$service-latest
-              else
-                echo "No changes detected for $service, skipping push to ECR."
-              fi
+            # Get new digest
+            new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest 2>/dev/null || true)
+            
+            # Compare digests and push if they are different or if the image doesn't exist in the repository
+            if [ "$new_digest" != "" ] && [ "$new_digest" != "$existing_digest" ]; then
+              docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+              docker push ${{ env.ECR_REGISTRY }}:$service-latest
             else
-              echo "Docker image $service:latest does not exist locally. Skipping push to ECR."
+              echo "No changes detected for $service, skipping push to ECR."
             fi
           done
   deploy:
