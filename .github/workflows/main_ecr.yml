@@ -49,11 +49,11 @@ jobs:
             
             # Retrieve existing digest from ECR, if it exists
             existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || true)
-            echo "existing digest &existing_digest"
-            
+            echo existing_digest
+
             # Get new digest
             new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest 2>/dev/null || true)
-            echo "new digest &new_digest"
+            echo new_digest
             # Compare digests and push if they are different or if the image doesn't exist in the repository
             if [ "$new_digest" != "" ] && [ "$new_digest" != "$existing_digest" ]; then
               docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
