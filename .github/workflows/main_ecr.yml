@@ -1,31 +1,27 @@
 name: Build and Deploy to ECR and Kubernetes
-
-on:
+'on':
   push:
     branches:
-      - main    # Adjust this to the branches where you want this workflow to run
-
+      - main
 env:
-  AWS_REGION: ca-central-1  # Adjust this to your AWS region
-  ECR_REGISTRY: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique  # Your ECR registry URI
-
+  AWS_REGION: ca-central-1
+  ECR_REGISTRY: 058264132523.dkr.ecr.ca-central-1.amazonaws.com/online-boutique
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-region: '${{ env.AWS_REGION }}'
       - name: Login to Amazon ECR
-        run: aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
-  
+        run: >-
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker
+          login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
       - name: Build Docker images
         run: |
           services=(
@@ -52,20 +48,29 @@ jobs:
             docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
             docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
-
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Push Docker images to ECR
         run: echo "Images are already pushed in the 'build' job"
-
+      - name: Execute Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+      - name: Run Terraform commands
+        run: |
+          terraform init
+          terraform plan
+          terraform apply --auto-approve
+        working-directory: test.tf
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Run test script
         run: ./test.sh
