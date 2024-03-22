@@ -22,7 +22,7 @@ jobs:
         run: >-
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker
           login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
-      - name: Build Docker images
+      - name: Check Docker image changes and push
         run: |
           services=(
             "emailservice"
@@ -43,9 +43,21 @@ jobs:
             if [ "$service" == "cartservice" ]; then
               context="src/cartservice/src"
             fi
+
+            # Build and tag the image
             docker build -t $service:latest $context
-            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-            docker push ${{ env.ECR_REGISTRY }}:$service-latest
+            new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest)
+
+            # Retrieve existing digest from ECR, if it exists
+            existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || echo "")
+
+            # Compare digests and push if they are different or if the image doesn't exist in the repository
+            if [ "$new_digest" != "$existing_digest" ]; then
+              docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+              docker push ${{ env.ECR_REGISTRY }}:$service-latest
+            else
+              echo "No changes detected for $service, skipping push to ECR."
+            fi
           done
   deploy:
     needs: build
@@ -59,19 +71,12 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
-
       - name: Terraform Init
         run: terraform init
-        #working-directory: test.tf
-
       - name: Terraform Plan
         run: terraform plan
-        #working-directory: test.tf
-
       - name: Terraform Apply
         run: terraform apply --auto-approve
-        #working-directory: test.tf
-        
   test:
     needs: build
     runs-on: ubuntu-latest
