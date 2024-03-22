@@ -20,9 +20,9 @@ jobs:
           aws-region: '${{ env.AWS_REGION }}'
       - name: Login to Amazon ECR
         run: >-
-          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login
-          --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
-      - name: Check Docker image changes and push
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker
+          login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
+      - name: Build Docker images
         run: |
           services=(
             "emailservice"
@@ -43,45 +43,33 @@ jobs:
             if [ "$service" == "cartservice" ]; then
               context="src/cartservice/src"
             fi
-
-            # Build and tag the image
             docker build -t $service:latest $context
-            new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest)
-
-            # Retrieve existing digest from ECR, if it exists
-            existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || echo "")
-
-            # Compare digests and push if they are different or if the image doesn't exist in the repository
-            if [ "$new_digest" != "$existing_digest" ]; then
-              docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-              docker push ${{ env.ECR_REGISTRY }}:$service-latest
-            else
-              echo "No changes detected for $service, skipping push to ECR."
-            fi
+            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+            docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
   deploy:
-    need: build
+    needs: build
     runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        - name: Push Docker images to ECR
-          run: echo "Images are already pushed in the 'build' job"
-        - name: Execute Terraform
-          uses: hashicorp/setup-terraform@v1
-          with:
-            terraform_version: 1.0.0
-        - name: Run Terraform commands
-          run: |
-            terraform init
-            terraform plan
-            terraform apply --auto-approve
-          working-directory: ./.github/workflows/test.tf
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Push Docker images to ECR
+        run: echo "Images are already pushed in the 'build' job"
+      - name: Execute Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+      - name: Run Terraform commands
+        run: |
+          terraform init
+          terraform plan
+          terraform apply --auto-approve
+        working-directory: ./.github/workflows/test.tf
   test:
     needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-        - name: Run test script
-          run: ./.github/workflows/test.sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run test script
+        run: ./.github/workflows/test.sh
