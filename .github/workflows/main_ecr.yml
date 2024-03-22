@@ -59,12 +59,19 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
-      - name: Run Terraform commands
-        run: |
-          terraform init
-          terraform plan
-          terraform apply --auto-approve
+
+      - name: Terraform Init
+        run: terraform init
         working-directory: /.github/workflows/test.tf
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: /.github/workflows/test.tf
+
+      - name: Terraform Apply
+        run: terraform apply --auto-approve
+        working-directory: /.github/workflows/test.tf
+        
   test:
     needs: build
     runs-on: ubuntu-latest
