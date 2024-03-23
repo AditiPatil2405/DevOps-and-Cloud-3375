@@ -51,16 +51,16 @@ jobs:
             existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text || true)
             echo "Existing digest: $existing_digest"
 
-            new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest 2>/dev/null || true)
-            echo "New digest: $new_digest"
+            #new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest 2>/dev/null || true)
+            #echo "New digest: $new_digest"
 
-            if [ "$new_digest" != "" ] && [ "$new_digest" != "$existing_digest" ]; then
-              echo "Pushing new image to ECR..."
-              docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
-              docker push ${{ env.ECR_REGISTRY }}:$service-latest
-            else
-              echo "No changes detected for $service, skipping push to ECR."
-            fi
+            #if [ "$new_digest" != "" ] && [ "$new_digest" != "$existing_digest" ]; then
+            echo "Pushing new image to ECR..."
+            docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
+            docker push ${{ env.ECR_REGISTRY }}:$service-latest
+            #else
+            #  echo "No changes detected for $service, skipping push to ECR."
+            #fi
 
           done
   deploy:
@@ -69,8 +69,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Push Docker images to ECR
-        run: echo "Images are already pushed in the 'build' job"
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-region: '${{ env.AWS_REGION }}'
+      #- name: Push Docker images to ECR
+      #  run: echo "Images are already pushed in the 'build' job"
       - name: Execute Terraform
         uses: hashicorp/setup-terraform@v1
         with:
