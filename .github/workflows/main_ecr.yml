@@ -48,8 +48,8 @@ jobs:
             docker build -t $service:latest $context
             
             # Retrieve existing digest from ECR, if it exists
-            existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text 2>/dev/null || true)
-            echo existing_digest
+            existing_digest=$(aws ecr describe-images --repository-name $service --image-ids imageTag=latest --region ${{ env.AWS_REGION }} --query 'images[0].imageDigest' --output text || true)
+            echo "Existing digest $existing_digest"
 
             # Get new digest
             new_digest=$(docker inspect --format='{{index .RepoDigests 0}}' $service:latest 2>/dev/null || true)
