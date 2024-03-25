@@ -61,7 +61,6 @@ jobs:
             #else
             #  echo "No changes detected for $service, skipping push to ECR."
             #fi
-
           done
   deploy:
     needs: build
@@ -77,16 +76,16 @@ jobs:
           aws-region: '${{ env.AWS_REGION }}'
       - name: Push Docker images to ECR
         run: echo "Images are already pushed in the 'build' job"
-      #- name: Execute Terraform
-      #  uses: hashicorp/setup-terraform@v1
-      #  with:
-      #    terraform_version: 1.0.0
-      #- name: Terraform Init
-      #  run: terraform init
-      #- name: Terraform Plan
-      #  run: terraform plan
-      #- name: Terraform Apply
-      #  run: terraform apply
+      - name: Execute Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.0
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Plan
+        run: terraform plan
+      - name: Terraform Apply
+        run: terraform apply
   test:
     needs: build
     runs-on: ubuntu-latest
