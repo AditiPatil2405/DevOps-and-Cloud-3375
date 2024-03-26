@@ -83,6 +83,9 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
+        env:
+          TF_VAR_eks_admins_iam_role_arn: ${{ secrets.eks_admins_arn }}
+          eks_admins_iam_role_name: 'aditi'
         run: terraform plan
       - name: Terraform Apply
         run: terraform apply --auto-approve
