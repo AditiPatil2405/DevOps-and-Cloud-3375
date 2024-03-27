@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      # Add a condition to run Docker build only if there are changes in the src repository
       - name: Check for changes in src repository
         id: check_changes
-        run: |
-          if [[ $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^src/' | wc -l) -gt 0 ]]; then
+        run: >
+          if [[ $(git diff --name-only ${{ github.event.before }} ${{ github.sha
+          }} | grep '^src/' | wc -l) -gt 0 ]]; then
             echo "::set-output name=changes::true"
           else
             echo "::set-output name=changes::false"
@@ -31,9 +31,8 @@ jobs:
         run: >
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker
           login --username AWS --password-stdin ${{ env.ECR_REGISTRY }}
-      # Docker build step will only execute if there are changes in src repository
       - name: Check Docker image changes and push
-        if: steps.check_changes.outputs.changes == 'true'  # Execute only if there are changes
+        if: steps.check_changes.outputs.changes == 'true'
         run: |
           services=(
             "emailservice"
@@ -66,9 +65,9 @@ jobs:
             docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
             docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
-        else
-          echo "No changes detected in the src repository, skipping Docker build."
-
+        else: >-
+          echo "No changes detected in the src repository, skipping Docker
+          build."
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -90,9 +89,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Plan
-        #env:
-        #  TF_VAR_eks_admins_iam_role_arn: ${{ secrets.EKS_ADMINS_ARN }}
-        #  TF_VAR_eks_admins_iam_role_name: ${{ secrets.EKS_ADMINS_NAME }}
         run: terraform plan
       - name: Terraform Apply
         run: terraform apply --auto-approve
