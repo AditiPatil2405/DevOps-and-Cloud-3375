@@ -18,13 +18,13 @@ variable "availability_zones" {
   default = ["ca-central-1a", "ca-central-1b"]
 }
 
-variable "eks_admins_iam_role_arn" {
-  description = "ARN of the IAM role for EKS administrators"
-}
+#variable "eks_admins_iam_role_arn" {
+#  description = "ARN of the IAM role for EKS administrators"
+#}
 
-variable "eks_admins_iam_role_name" {
-  description = "Name of the IAM role for EKS administrators"
-}
+#variable "eks_admins_iam_role_name" {
+#  description = "Name of the IAM role for EKS administrators"
+#}
 
 
 
