@@ -66,8 +66,9 @@ jobs:
             docker tag $service:latest ${{ env.ECR_REGISTRY }}:$service-latest
             docker push ${{ env.ECR_REGISTRY }}:$service-latest
           done
-        else: echo "Skipped the image push"
-         
+        else
+          echo "No changes detected in the src repository, skipping Docker build."
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
