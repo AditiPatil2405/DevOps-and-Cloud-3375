@@ -1,6 +1,6 @@
 variable "cluster_name" {
   type = string
-  default = "Online_Boutique2"
+  default = "Online_Boutique3"
 }
 
 variable "cluster_version" {

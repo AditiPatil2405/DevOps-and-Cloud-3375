@@ -1,7 +1,7 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
-  name = "main"
+  name = "main2"
   cidr = "10.0.0.0/16"
   azs             = var.availability_zones
   private_subnets = ["10.0.0.0/19", "10.0.32.0/19"]
