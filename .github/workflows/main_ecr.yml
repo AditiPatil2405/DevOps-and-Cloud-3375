@@ -87,10 +87,13 @@ jobs:
           terraform_version: 1.0.0
       - name: Terraform Init
         run: terraform init
+      - name: Terraform Destroy
+        run: terraform destroy --auto-approve 
       - name: Terraform Plan
         run: terraform plan
       - name: Terraform Apply
         run: terraform apply --auto-approve
+      
   test:
     needs: build
     runs-on: ubuntu-latest
