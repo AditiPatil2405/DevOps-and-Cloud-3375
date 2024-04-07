@@ -122,6 +122,7 @@ jobs:
         run: chmod +x test.sh
 
   Cleanup:
+    needs: prov
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
